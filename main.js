@@ -28,6 +28,7 @@ function yumetobiEffects() {
 
             //回転半径
             this.radius = 250;
+            this.size = 50;
 
         },
 
@@ -38,6 +39,9 @@ function yumetobiEffects() {
 
             //回転半径を減らす
             this.radius -= 3;
+
+            //円のサイズを小さくする
+            this.size -= 0.5;
 
             // 角度をラジアンに変換
             this.rad = this.deg * Math.PI / 180;
@@ -55,7 +59,7 @@ function yumetobiEffects() {
             //描画を始める
             ctx.beginPath();
 
-            ctx.arc(this.x,this.y,30,0,Math.PI*2,false);
+            ctx.arc(this.x,this.y,this.size,0,Math.PI*2,false);
             ctx.stroke();
 
         },
