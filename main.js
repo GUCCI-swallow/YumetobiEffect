@@ -8,15 +8,16 @@ function yumetobiEffects() {
     var w   = cs.width;
     var h   = cs.height;
     var circles = [];
+    var fillColors = ["#ffb391","#ff88d8","#f79998","#f0be52"];
 
     
 
-    var Circle = function(deg){
-        this.initialize(deg);
+    var Circle = function(deg,fillColor){
+        this.initialize(deg,fillColor);
     }
 
     Circle.prototype = {
-        initialize: function(deg){
+        initialize: function(deg,fillColor){
             this.x = 0;
             this.y = 0;
 
@@ -27,21 +28,22 @@ function yumetobiEffects() {
             this.rad = 0;
 
             //回転半径
-            this.radius = 250;
-            this.size = 50;
+            this.radius = w/2;
+            this.size = w/10;
 
+            this.fillColor = fillColor;
         },
 
         updatePos: function(){
 
             // 角度を増やす
-            this.deg += 5;
+            this.deg += w/100;
 
             //回転半径を減らす
             this.radius -= 3;
 
             //円のサイズを小さくする
-            this.size -= 0.5;
+            this.size -= w/1000;
 
             // 角度をラジアンに変換
             this.rad = this.deg * Math.PI / 180;
@@ -50,17 +52,21 @@ function yumetobiEffects() {
             this.x   = (w/2) + this.radius * Math.cos(this.rad);
 
             // Y座標 = 円の中心y座標 + 半径 * Sin
-            this.y   = (h/2) + this.radius * Math.sin(this.rad);
+            this.y   = (h/2) - this.radius * Math.sin(this.rad);
             //console.log("x="+this.x+":y="+this.y);
+            //
 
         },
 
         drawing: function(){
+            if(this.size < 0)return false;
+
             //描画を始める
             ctx.beginPath();
 
             ctx.arc(this.x,this.y,this.size,0,Math.PI*2,false);
-            ctx.stroke();
+            ctx.fillStyle = this.fillColor;
+            ctx.fill();
 
         },
 
@@ -76,7 +82,8 @@ function yumetobiEffects() {
     cs.addEventListener("click",function(event){
       console.log("click!");
       var initPos = Math.floor(Math.random() * 360) + 1;
-      var circle = new Circle(initPos);
+      var color = fillColors[Math.floor(Math.random()*fillColors.length)+1];
+      var circle = new Circle(initPos,color);
       circles.push(circle);
     },false);
 
@@ -88,6 +95,12 @@ function yumetobiEffects() {
         circles.forEach(function(circle){
           circle.render();
         });
+
+        ctx.fillStyle = "yellow";
+        ctx.font = "100px 'ＭＳ ゴシック'";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "top";
+        ctx.fillText("µ's",w/2,h/2-50,300);
 
         //アニメーションする
         requestAnimationFrame(render);
