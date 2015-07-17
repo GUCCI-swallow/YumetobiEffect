@@ -1,7 +1,3 @@
-/*
- * circle
- * 円軌道を描く
- */
 function yumetobiEffects() {
     var cs  = document.getElementById('main');
     var ctx = cs.getContext('2d');
@@ -59,8 +55,10 @@ function yumetobiEffects() {
         },
 
         drawing: function(){
-            if(this.size < 0)return false;
-
+            if(this.size < 0){
+              delete this;
+              return false;
+            }
             //描画を始める
             ctx.beginPath();
 
@@ -72,7 +70,6 @@ function yumetobiEffects() {
 
         render: function(){
             if(this.radius <= 0)return false;
-
             this.updatePos();
             this.drawing();
         }
@@ -83,15 +80,15 @@ function yumetobiEffects() {
       console.log("click!");
       var initPos = Math.floor(Math.random() * 360) + 1;
       var color = fillColors[Math.floor(Math.random()*fillColors.length)+1];
-      var circle = new Circle(initPos,color);
+      circle = new Circle(initPos,color);
       circles.push(circle);
+      //console.log(circles);
     },false);
 
 
     (function render() {
         ctx.clearRect(0, 0, w, h);
         //if(circles.length <= 0)return false;
-
         circles.forEach(function(circle){
           circle.render();
         });
