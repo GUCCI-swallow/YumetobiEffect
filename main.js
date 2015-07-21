@@ -6,7 +6,7 @@ function yumetobiEffects() {
     var circles = [];
     var fillColors = ["#ffb391","#ff88d8","#f79998","#f0be52"];
 
-    
+
 
     var Circle = function(deg,fillColor){
         this.initialize(deg,fillColor);
@@ -56,8 +56,8 @@ function yumetobiEffects() {
 
         drawing: function(){
             if(this.size < 0){
-              delete this;
-              return false;
+                delete this;
+                return false;
             }
             //描画を始める
             ctx.beginPath();
@@ -77,20 +77,21 @@ function yumetobiEffects() {
     };
 
     cs.addEventListener("click",function(event){
-      console.log("click!");
-      var initPos = Math.floor(Math.random() * 360) + 1;
-      var color = fillColors[Math.floor(Math.random()*fillColors.length)+1];
-      circle = new Circle(initPos,color);
-      circles.push(circle);
-      //console.log(circles);
+        console.log("click!");
+        var initPos = Math.floor(Math.random() * 360) + 1;
+        var color = fillColors[Math.floor(Math.random()*fillColors.length)+1];
+        circle = new Circle(initPos,color);
+        circles.push(circle);
+        //console.log(circles);
     },false);
 
 
     (function render() {
+
         ctx.clearRect(0, 0, w, h);
         //if(circles.length <= 0)return false;
         circles.forEach(function(circle){
-          circle.render();
+            circle.render();
         });
 
         ctx.fillStyle = "yellow";
@@ -105,4 +106,32 @@ function yumetobiEffects() {
 
 }
 
+function drawBackGround(){
+
+    console.log('drawBackGround');
+
+    var cs  = document.getElementById('background');
+    var ctx = cs.getContext('2d');
+    var w   = cs.width;
+    var h   = cs.height;
+
+    ctx.beginPath();
+    /* グラデーション領域をセット */
+    var grad  = ctx.createRadialGradient(w/2,h/2,w/10,w/2,h/2,w/2);
+
+    /* グラデーション終点のオフセットと色をセット */
+    grad.addColorStop(0,'#f7b34c');      
+    grad.addColorStop(1,'#feeeea'); 
+    grad.addColorStop(1,'#c383a2');     
+
+    /* グラデーションをfillStyleプロパティにセット */
+    ctx.fillStyle = grad;
+
+    /* 矩形を描画 */
+    ctx.rect(0,0, w,h);
+    ctx.fill();
+}
+
+drawBackGround();
 yumetobiEffects();
+
