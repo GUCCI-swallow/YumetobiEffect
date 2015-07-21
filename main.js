@@ -94,12 +94,6 @@ function yumetobiEffects() {
             circle.render();
         });
 
-        ctx.fillStyle = "yellow";
-        ctx.font = "100px 'ＭＳ ゴシック'";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "top";
-        ctx.fillText("µ's",w/2,h/2-50,300);
-
         //アニメーションする
         requestAnimationFrame(render);
     })();
@@ -107,9 +101,6 @@ function yumetobiEffects() {
 }
 
 function drawBackGround(){
-
-    console.log('drawBackGround');
-
     var cs  = document.getElementById('background');
     var ctx = cs.getContext('2d');
     var w   = cs.width;
@@ -117,7 +108,7 @@ function drawBackGround(){
 
     ctx.beginPath();
     /* グラデーション領域をセット */
-    var grad  = ctx.createRadialGradient(w/2,h/2,w/10,w/2,h/2,w/2);
+    var grad  = ctx.createRadialGradient(w/2,h/2,50,w/2,h/2,w/2);
 
     /* グラデーション終点のオフセットと色をセット */
     grad.addColorStop(0,'#f7b34c');      
@@ -130,6 +121,15 @@ function drawBackGround(){
     /* 矩形を描画 */
     ctx.rect(0,0, w,h);
     ctx.fill();
+
+    var img = new Image();
+    var imgWidth = 120;
+    var imgHeight = 120;
+    img.src = "./src/muse.png";
+
+    img.onload = function(){
+      ctx.drawImage(img,w/2 - imgWidth/2,h/2 - imgHeight/2,imgWidth,imgHeight);
+    }
 }
 
 drawBackGround();
