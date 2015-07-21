@@ -64,6 +64,7 @@ function yumetobiEffects() {
 
             ctx.arc(this.x,this.y,this.size,0,Math.PI*2,false);
             ctx.fillStyle = this.fillColor;
+            ctx.globalAlpha = 0.7;
             ctx.fill();
 
         },
